@@ -1,0 +1,8 @@
+ssh_key_public = "ssh-rsa AAAA_YOUR_SSH_PUBLIC_KEY"
+zone           = "pl-waw1"
+www_plan       = "1xCPU-1GB"
+nas_plan       = "4xCPU-8GB"
+dbaas_plan     = "2x2xCPU-4GB-50GB"
+lbaas_plan     = "production-small"
+nas_network    = "10.20.0.0/24"
+lb_network     = "10.20.10.0/24"
