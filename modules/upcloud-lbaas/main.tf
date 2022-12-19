@@ -4,7 +4,17 @@ resource "upcloud_loadbalancer" "main" {
   name              = "www-cluster-lb"
   plan              = var.lbaas_plan
   zone              = var.zone
-  network           = var.lb_sdn
+  networks {
+    name = "SDN-Network"
+    family = "IPv4"
+    type = "private"
+    network = var.lb_sdn
+  }
+  networks {
+    name   = "Public-Network"
+    type   = "public"
+    family = "IPv4"
+  }
   depends_on        = [var.lb_sdn]
 }
 
@@ -30,5 +40,9 @@ resource "upcloud_loadbalancer_frontend" "main" {
   name                 = "main"
   mode                 = "http"
   port                 = 80
+  networks {
+    name = upcloud_loadbalancer.main.networks[1].name
+  }
+
   default_backend_name = upcloud_loadbalancer_backend.main.name
 }

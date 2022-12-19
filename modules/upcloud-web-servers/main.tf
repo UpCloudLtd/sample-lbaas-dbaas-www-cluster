@@ -68,6 +68,21 @@ resource "upcloud_server" "web" {
   }
 }
 
+resource "upcloud_server_group" "web-ha-pair" {
+  title         = "web_ha_group"
+  anti_affinity = true
+  labels = {
+    "key1" = "web-ha"
+
+  }
+  members = [
+    upcloud_server.web[0].id,
+    upcloud_server.web[1].id
+  ]
+
+}
+
+
 resource "upcloud_firewall_rules" "web_fw" {
   count     = 2
   server_id = upcloud_server.web["${count.index}"].id
