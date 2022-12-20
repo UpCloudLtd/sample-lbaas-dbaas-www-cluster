@@ -1,4 +1,4 @@
-# simple-custom-module-example
+# sample-lbaas-dbaas-www-cluster
 This is simple example of how to build HA web cluster in Terraform with UpCloud provider. In this example we create web cluster with WWW servers, NFS server and DBaaS.
 
 
