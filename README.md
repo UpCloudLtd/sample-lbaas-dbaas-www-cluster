@@ -45,6 +45,17 @@ Demo can now be created with Terraform. Creation takes around 10-15 minutes.
 make create
 ```
 
+### Testing stuff
+
+After the setup has been created Terraform will output DBaaS service credentials, IP address of bastion host and LBaaS service hostname.
+Simple test is to use `curl` or browser to access LBaaS hostname to see `phpinfo()` of WWW servers. 
+You can use bastion host as jump host to log in to other servers via Utility network using SSH key.
+```
+$ ssh -A -lroot <bastion_host>
+root@jumphost-server:~# ssh <Utility network IP address of WWW or NFS server> -lroot
+```
+You can test your Web application by uploading it to DocumentRoot in one of WWW server or to NFS server and test it with DBaaS services.
+
 ### Destroying stuff
 
 After testing things its good to free the resources. Tearing the thing down is also just one command.
