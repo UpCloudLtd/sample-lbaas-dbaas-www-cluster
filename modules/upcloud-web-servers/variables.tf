@@ -14,10 +14,19 @@ variable "www_plan" {
 variable "nas_ip" {
   type = string
 }
+
 variable "nas_sdn" {
   type = string
 }
-variable "lb_network" {
+
+variable "lb_sdn" {
   type = string
 }
 
+variable "jump_host" {
+  type = string
+}
+
+variable "private_key" {
+  type = string
+}
