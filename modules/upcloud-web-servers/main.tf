@@ -37,7 +37,7 @@ awk 'NR==16{print "            nameservers:\n                addresses: [94.237.
 cat netplan_out > /etc/netplan/50-cloud-init.yaml
 netplan apply
 export DEBIAN_FRONTEND=noninteractive
-apt update
+apt-get -q -y update
 apt-get -o 'Dpkg::Options::=--force-confold' -q -y upgrade
 apt-get -o 'Dpkg::Options::=--force-confold' -q -y install apache2 php php-mysql php-xml php-mbstring libapache2-mod-php php-common nfs-client nfs-common
 mkdir -p /var/www/data
@@ -63,107 +63,3 @@ resource "upcloud_server_group" "web-ha-pair" {
   ]
 
 }
-
-
-resource "upcloud_firewall_rules" "web_fw" {
-  count     = 2
-  server_id = upcloud_server.web["${count.index}"].id
-  firewall_rule {
-    action               = "accept"
-    direction            = "in"
-    family               = "IPv6"
-    protocol             = "tcp"
-    source_address_end   = "2a04:3540:53::1"
-    source_address_start = "2a04:3540:53::1"
-    source_port_end      = "53"
-    source_port_start    = "53"
-  }
-
-  firewall_rule {
-    action               = "accept"
-    direction            = "in"
-    family               = "IPv6"
-    protocol             = "udp"
-    source_address_end   = "2a04:3540:53::1"
-    source_address_start = "2a04:3540:53::1"
-    source_port_end      = "53"
-    source_port_start    = "53"
-  }
-
-  firewall_rule {
-    action               = "accept"
-    direction            = "in"
-    family               = "IPv6"
-    protocol             = "tcp"
-    source_address_end   = "2a04:3544:53::1"
-    source_address_start = "2a04:3544:53::1"
-    source_port_end      = "53"
-    source_port_start    = "53"
-  }
-
-  firewall_rule {
-    action               = "accept"
-    direction            = "in"
-    family               = "IPv6"
-    protocol             = "udp"
-    source_address_end   = "2a04:3544:53::1"
-    source_address_start = "2a04:3544:53::1"
-    source_port_end      = "53"
-    source_port_start    = "53"
-  }
-
-  firewall_rule {
-    action               = "accept"
-    direction            = "in"
-    family               = "IPv4"
-    protocol             = "udp"
-    source_address_end   = "94.237.127.9"
-    source_address_start = "94.237.127.9"
-    source_port_end      = "53"
-    source_port_start    = "53"
-  }
-
-  firewall_rule {
-    action               = "accept"
-    direction            = "in"
-    family               = "IPv4"
-    protocol             = "tcp"
-    source_address_end   = "94.237.127.9"
-    source_address_start = "94.237.127.9"
-    source_port_end      = "53"
-    source_port_start    = "53"
-  }
-
-  firewall_rule {
-    action               = "accept"
-    direction            = "in"
-    family               = "IPv4"
-    protocol             = "udp"
-    source_address_end   = "94.237.40.9"
-    source_address_start = "94.237.40.9"
-    source_port_end      = "53"
-    source_port_start    = "53"
-  }
-
-  firewall_rule {
-    action               = "accept"
-    direction            = "in"
-    family               = "IPv4"
-    protocol             = "tcp"
-    source_address_end   = "94.237.40.9"
-    source_address_start = "94.237.40.9"
-    source_port_end      = "53"
-    source_port_start    = "53"
-  }
-
-  firewall_rule {
-    action                 = "accept"
-    comment                = "Allow SSH "
-    destination_port_end   = "22"
-    destination_port_start = "22"
-    direction              = "in"
-    family                 = "IPv4"
-    protocol               = "tcp"
-  }
-}
-

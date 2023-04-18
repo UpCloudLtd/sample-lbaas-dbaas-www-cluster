@@ -13,15 +13,17 @@ variable "www_plan" {
 variable "dbaas_plan" {
   type = string
 }
+
 variable "redis_plan" {
   type = string
 }
+
 variable "lbaas_plan" {
   type = string
 }
 
 variable "nas_sdn" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -30,7 +32,7 @@ variable "nas_network" {
 }
 
 variable "lb_sdn" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -43,11 +45,11 @@ variable "ssh_key_public" {
 }
 
 variable "jump_host" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "private_key" {
-  type = string
+  type    = string
   default = ""
 }

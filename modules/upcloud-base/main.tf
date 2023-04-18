@@ -31,6 +31,110 @@ apt-get -o 'Dpkg::Options::=--force-confold' -q -y upgrade
 EOT
 }
 
+resource "upcloud_firewall_rules" "jumphost_fw" {
+  server_id = upcloud_server.jumphost.id
+  firewall_rule {
+    action               = "accept"
+    direction            = "in"
+    family               = "IPv6"
+    protocol             = "tcp"
+    source_address_end   = "2a04:3540:53::1"
+    source_address_start = "2a04:3540:53::1"
+    source_port_end      = "53"
+    source_port_start    = "53"
+  }
+
+  firewall_rule {
+    action               = "accept"
+    direction            = "in"
+    family               = "IPv6"
+    protocol             = "udp"
+    source_address_end   = "2a04:3540:53::1"
+    source_address_start = "2a04:3540:53::1"
+    source_port_end      = "53"
+    source_port_start    = "53"
+  }
+
+  firewall_rule {
+    action               = "accept"
+    direction            = "in"
+    family               = "IPv6"
+    protocol             = "tcp"
+    source_address_end   = "2a04:3544:53::1"
+    source_address_start = "2a04:3544:53::1"
+    source_port_end      = "53"
+    source_port_start    = "53"
+  }
+
+  firewall_rule {
+    action               = "accept"
+    direction            = "in"
+    family               = "IPv6"
+    protocol             = "udp"
+    source_address_end   = "2a04:3544:53::1"
+    source_address_start = "2a04:3544:53::1"
+    source_port_end      = "53"
+    source_port_start    = "53"
+  }
+
+  firewall_rule {
+    action               = "accept"
+    direction            = "in"
+    family               = "IPv4"
+    protocol             = "udp"
+    source_address_end   = "94.237.127.9"
+    source_address_start = "94.237.127.9"
+    source_port_end      = "53"
+    source_port_start    = "53"
+  }
+
+  firewall_rule {
+    action               = "accept"
+    direction            = "in"
+    family               = "IPv4"
+    protocol             = "tcp"
+    source_address_end   = "94.237.127.9"
+    source_address_start = "94.237.127.9"
+    source_port_end      = "53"
+    source_port_start    = "53"
+  }
+
+  firewall_rule {
+    action               = "accept"
+    direction            = "in"
+    family               = "IPv4"
+    protocol             = "udp"
+    source_address_end   = "94.237.40.9"
+    source_address_start = "94.237.40.9"
+    source_port_end      = "53"
+    source_port_start    = "53"
+  }
+
+  firewall_rule {
+    action               = "accept"
+    direction            = "in"
+    family               = "IPv4"
+    protocol             = "tcp"
+    source_address_end   = "94.237.40.9"
+    source_address_start = "94.237.40.9"
+    source_port_end      = "53"
+    source_port_start    = "53"
+  }
+
+  firewall_rule {
+    action                 = "accept"
+    comment                = "Allow SSH "
+    destination_port_end   = "22"
+    destination_port_start = "22"
+    direction              = "in"
+    family                 = "IPv4"
+    protocol               = "tcp"
+  }
+  firewall_rule {
+    action    = "drop"
+    direction = "in"
+  }
+}
 resource "upcloud_router" "gateway" {
   name = "nat-gw-router"
 }
