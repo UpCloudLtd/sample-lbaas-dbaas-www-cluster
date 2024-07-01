@@ -23,6 +23,10 @@ variable "lb_sdn" {
   type = string
 }
 
+variable "db_sdn" {
+  type = string
+}
+
 variable "jump_host" {
   type = string
 }

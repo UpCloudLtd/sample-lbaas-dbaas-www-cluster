@@ -1,10 +1,10 @@
 
 resource "upcloud_server" "jumphost" {
-  hostname   = "jumphost-server"
-  zone       = var.zone
-  plan       = "1xCPU-1GB"
-  firewall   = true
-  metadata   = true
+  hostname = "jumphost-server"
+  zone     = var.zone
+  plan     = "1xCPU-1GB"
+  firewall = true
+  metadata = true
 
   template {
     storage = "Ubuntu Server 22.04 LTS (Jammy Jellyfish)"
@@ -13,7 +13,7 @@ resource "upcloud_server" "jumphost" {
     type = "public"
   }
   network_interface {
-    type    = "utility"
+    type = "utility"
   }
   login {
     user = "root"
@@ -138,7 +138,9 @@ resource "upcloud_firewall_rules" "jumphost_fw" {
 resource "upcloud_router" "gateway" {
   name = "nat-gw-router"
 }
-
+resource "upcloud_router" "dbaas" {
+  name = "dbaas-gw-router"
+}
 resource "upcloud_network" "nas_sdn_network" {
   name = "nas-network"
   zone = var.zone
@@ -162,6 +164,19 @@ resource "upcloud_network" "lb_sdn_network" {
     family             = "IPv4"
   }
 
+}
+
+resource "upcloud_network" "db_sdn_network" {
+  name = "db-network"
+  zone = var.zone
+
+  ip_network {
+    address            = var.db_network
+    dhcp               = true
+    dhcp_default_route = false
+    family             = "IPv4"
+  }
+  router = upcloud_router.dbaas.id
 }
 
 resource "upcloud_gateway" "nat-gateway" {

@@ -7,3 +7,6 @@ output "nas_sdn" {
 output "lb_sdn" {
   value = upcloud_network.lb_sdn_network.id
 }
+output "db_sdn" {
+  value = upcloud_network.db_sdn_network.id
+}

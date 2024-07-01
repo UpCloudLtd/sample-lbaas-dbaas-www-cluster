@@ -4,6 +4,7 @@ module "upcloud_base" {
   ssh_key_public = var.ssh_key_public
   lb_network     = var.lb_network
   nas_network    = var.nas_network
+  db_network     = var.db_network
 }
 
 module "upcloud_dbaas" {
@@ -11,6 +12,7 @@ module "upcloud_dbaas" {
   zone       = var.zone
   dbaas_plan = var.dbaas_plan
   redis_plan = var.redis_plan
+  db_sdn     = module.upcloud_base.db_sdn
 }
 module "upcloud_nfs_server" {
   source         = "./modules/upcloud-nfs-server"
@@ -34,6 +36,7 @@ module "upcloud_www_servers" {
   nas_ip         = module.upcloud_nfs_server.nas_ip
   jump_host      = var.jump_host
   private_key    = var.private_key
+  db_sdn         = module.upcloud_base.db_sdn
 }
 
 

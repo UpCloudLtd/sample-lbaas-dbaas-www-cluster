@@ -4,7 +4,7 @@ resource "upcloud_server" "nas" {
   plan       = var.nas_plan
   firewall   = true
   metadata   = true
-  depends_on = [var.nas_sdn,var.jump_host]
+  depends_on = [var.nas_sdn, var.jump_host]
 
   template {
     storage = "Ubuntu Server 22.04 LTS (Jammy Jellyfish)"

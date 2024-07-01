@@ -14,3 +14,7 @@ variable "nas_network" {
 variable "lb_network" {
   type = string
 }
+
+variable "db_network" {
+  type = string
+}

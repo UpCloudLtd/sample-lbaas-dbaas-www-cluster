@@ -40,6 +40,10 @@ variable "lb_network" {
   type = string
 }
 
+variable "db_network" {
+  type = string
+}
+
 variable "ssh_key_public" {
   type = string
 }

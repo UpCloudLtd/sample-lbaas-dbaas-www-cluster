@@ -10,3 +10,7 @@ variable "dbaas_plan" {
 variable "redis_plan" {
   type = string
 }
+
+variable "db_sdn" {
+  type = string
+}

@@ -6,13 +6,14 @@ resource "upcloud_server" "web" {
   count      = 2
   plan       = var.www_plan
   metadata   = true
-  depends_on = [var.nas_sdn, var.lb_sdn, var.jump_host]
+  depends_on = [var.nas_sdn, var.db_sdn, var.lb_sdn, var.jump_host]
 
   template {
     storage = "Ubuntu Server 22.04 LTS (Jammy Jellyfish)"
   }
   network_interface {
-    type = "utility"
+    type    = "private"
+    network = var.db_sdn
   }
   network_interface {
     type    = "private"
@@ -22,7 +23,9 @@ resource "upcloud_server" "web" {
     type    = "private"
     network = var.lb_sdn
   }
-
+  network_interface {
+    type = "utility"
+  }
   login {
     user = "root"
     keys = [
@@ -51,8 +54,8 @@ EOT
 }
 
 resource "upcloud_server_group" "web-ha-pair" {
-  title         = "web_ha_group"
-  anti_affinity = true
+  title                = "web_ha_group"
+  anti_affinity_policy = "yes"
   labels = {
     "key1" = "web-ha"
 
